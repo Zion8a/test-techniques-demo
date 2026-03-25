@@ -1,32 +1,45 @@
-# Test Techniques Demo
+package org.example;
 
-A portfolio project that demonstrates practical software testing skills using Java, Maven, and JUnit 5.
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-        ## Purpose
+import static org.junit.jupiter.api.Assertions.*;
 
-This project shows how classic test design techniques can be translated into automated tests.
+class BmiCategoryClassifierTest {
 
-The current version focuses on small rule-based examples and demonstrates:
-        - equivalence partitioning
-- boundary value analysis
-- invalid input testing
-- parameterized tests in JUnit 5
+    private final BmiCategoryClassifier classifier = new BmiCategoryClassifier();
 
-        ## Project Structure
+    @ParameterizedTest
+    @CsvSource({
+            "18.4, Underweight",
+            "18.5, Normal weight",
+            "22.0, Normal weight",
+            "24.9, Normal weight",
+            "25.0, Overweight",
+            "27.5, Overweight",
+            "29.9, Overweight",
+            "30.0, Obesity",
+            "35.0, Obesity"
+    })
+    void shouldClassifyValidBmiValuesCorrectly(double bmi, String expectedCategory) {
+        assertEquals(expectedCategory, classifier.classify(bmi));
+    }
 
-```text
-test-techniques-demo/
-        ├─ pom.xml
-├─ README.md
-├─ src/
-        │  ├─ main/
-        │  │  └─ java/
-        │  │     └─ org/example/
-        │  │        ├─ AgeCategoryClassifier.java
-│  │        ├─ BmiCategoryClassifier.java
-│  │        └─ Main.java
-│  └─ test/
-        │     └─ java/
-        │        └─ org/example/
-        │           ├─ AgeCategoryClassifierTest.java
-│           └─ BmiCategoryClassifierTest.java
+    @ParameterizedTest
+    @ValueSource(doubles = {0.0, -1.0, -5.5})
+    void shouldThrowExceptionForInvalidBmiValues(double bmi) {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> classifier.classify(bmi)
+        );
+
+        assertEquals("BMI must be greater than 0", exception.getMessage());
+    }
+
+    @Test
+    void shouldReturnNormalWeightForTypicalMiddleValue() {
+        assertEquals("Normal weight", classifier.classify(21.5));
+    }
+}

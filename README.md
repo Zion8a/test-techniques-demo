@@ -6,7 +6,7 @@ A portfolio project that demonstrates practical software testing skills using Ja
 
 This project shows how classic test design techniques can be translated into automated tests.
 
-The current version focuses on an age classification rule and demonstrates:
+The current version focuses on small rule-based examples and demonstrates:
 - equivalence partitioning
 - boundary value analysis
 - invalid input testing
@@ -23,8 +23,10 @@ test-techniques-demo/
 │  │  └─ java/
 │  │     └─ org/example/
 │  │        ├─ AgeCategoryClassifier.java
+│  │        ├─ BmiCategoryClassifier.java
 │  │        └─ Main.java
 │  └─ test/
 │     └─ java/
 │        └─ org/example/
-│           └─ AgeCategoryClassifierTest.java
+│           ├─ AgeCategoryClassifierTest.java
+│           └─ BmiCategoryClassifierTest.java
