@@ -18,6 +18,10 @@ The current version focuses on small rule-based examples and demonstrates:
 test-techniques-demo/
 ├─ pom.xml
 ├─ README.md
+├─ docs/
+│  ├─ boundary-value-analysis.md
+│  ├─ equivalence-partitioning.md
+│  └─ test-design.md
 ├─ src/
 │  ├─ main/
 │  │  └─ java/
